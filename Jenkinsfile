@@ -28,7 +28,6 @@ pipeline {
                 script {
                     sh """
                         echo "Hello from Test stage.."
-            
                     """
                 }
                 
