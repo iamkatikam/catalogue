@@ -2,6 +2,13 @@ pipeline {
     agent {
         label 'AGENT-1'
     }
+    environment { 
+        appVersion = '1.0'
+        REGION = "us-east-1"
+        ACC_ID = "315069654700"
+        PROJECT = "roboshop"
+        COMPONENT = "catalogue"
+    }
 /*     environment {
         COURSE = 'Jenkins'
     } */
@@ -14,13 +21,13 @@ pipeline {
         booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'Run unit tests?')
     } */
     stages {
-        stage('Build') {
+        stage('Read package.json') {
             steps {
                 script {
-                    echo "Building.."
-                    
+                    def packageJson = readJSON file: 'package.json'
+                    appVersion = packageJson.version
+                    echo "Package version: ${appVersion}"
                 }
-                
             }
         }
         stage('Test'){
